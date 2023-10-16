@@ -1,4 +1,4 @@
-ifndef PESSOA_HPP
+#ifndef PESSOA_HPP
 #define PESSOA_HPP
 #include <iostream>
 #include <string>
@@ -11,9 +11,7 @@ class Pessoa {
         string cpf;
         char sexo;
         int telefone;
-        int identidade;
-    
-    
+        int identidade;   
     public:
         void setNome(string nome);
     
@@ -41,5 +39,7 @@ class Pessoa {
 
         Pessoa(string nome,string endereco,string cpf,char sexo, int telefone,int identidade);
         Pessoa();
+
+        void imprimir();
 };
 #endif

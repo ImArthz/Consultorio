@@ -47,7 +47,17 @@ void Pessoa:: setID(int identidade){
   this -> identidade = identidade;
   
 } 
-int Pessoa:: getId(){
+int Pessoa:: getID(){
   return identidade;
   
+}
+void Pessoa :: imprimir()
+{
+    cout << "Nome: \t\t" << getNome() << endl;
+    cout << "Sexo: \t" << getSexo() << endl;
+    cout << "Endereço: \t" << getEndereco() << endl;
+    cout << "CPF: \t" << getCpf() << endl;
+    cout << "Telefone: \t" << getTel() << endl;
+    cout << "Identidade: \t" << getID() << endl;
+
 }
