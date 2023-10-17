@@ -145,7 +145,7 @@ git push origin minha-contribuicao
 Abra um pull request neste repositório original.
 
 ## Licença
-Este projeto está licenciado sob a Licença MIT: [License.txt].
+Este projeto está licenciado sob a Licença MIT: [LICENSE].
 
 **Autor:** Arthur De Oliveira Mendonça 
 
