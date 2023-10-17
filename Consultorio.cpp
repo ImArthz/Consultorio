@@ -483,3 +483,48 @@ bool Consultorio::removerConsulta(int identificador)
         }
         
     }
+void Consultorio::imprimirListaDePacientes(){
+    cout << "\tImprimindo paciente...\t\n";
+	pacientes->Imprimir_Paciente();
+}
+void Consultorio::imprimirListaDeMedicos(){
+    cout << "\tImprimindo medicos...\t\n";
+			medicos->Imprimir_Medico();
+
+}
+void Consultorio::imprimirConsultas();(){
+    cout << "\tImprimindo Consultas...\t\n";
+			consultas->Imprimir_Consulta();
+}
+void Consultorio::imprimirConsultasDoMedico(){
+    int CRM;
+    Consulta* consu=consultas->getHead();
+    cout<<" \t* LISTA DE CONSULTAS DE UM DETERMINADO MEDICO *\t";
+    while (true) {
+            cout << "->Digite o crm do medico: " << endl;
+            cin >> CRM;
+
+            if (cin.fail()) {
+                cin.clear();  // Limpa o estado de erro
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                cout << "Entrada inválida. Digite um número inteiro." << endl;
+            } else {
+                // Entrada válida, podemos sair do loop
+                break;
+            }
+        }
+    while(consu)
+    {
+        if(consu->getcrmMedico()==CRM){
+        cout<<"=====================================================";
+        cout<<endl;
+        cout << "data  \t: " << consu->getData()<< endl;
+        cout << "horario \t: " << consu->getHora() << endl;
+        cout << "CPF do paciente \t: " << consu->getcpfPaciente() << endl;
+        cout << "CRM do medico \t: "<< consu->getcrmMedico() << endl;
+        cout<<endl;
+        cout<<"=====================================================\n";
+        }
+        consu=consu->getProx();
+    }
+}
