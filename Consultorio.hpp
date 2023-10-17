@@ -21,6 +21,7 @@ class Consultorio
     public:
         Consultorio(int telefone, string nome, string endereco);
         Consultorio();
+        ~Consultorio();
         void setTelefone(int telefone);
         int getTelefone();
         void setNome(string nome);
@@ -41,6 +42,10 @@ class Consultorio
         void imprimirConsultas();
         void imprimirConsultasDoMedico();
         void imprimirListaDeMedicos();
+        void imprimirDadosConsultaEspecifica(Consultorio consultorio)
+        
+        bool pacienteExiste(int cpf);
+        bool medicoExiste(int crm);
 
 };
 #endif
