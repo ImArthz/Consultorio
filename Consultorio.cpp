@@ -496,13 +496,12 @@ void Consultorio::imprimirConsultas();(){
     cout << "\tImprimindo Consultas...\t\n";
 			consultas->Imprimir_Consulta();
 }
-void Consultorio::imprimirConsultasDoMedico(){
+void Consultorio::imprimirConsultasPorIdentificador(){
     int CRM;
     Consulta* consu=consultas->getHead();
-    cout<<" \t* LISTA DE CONSULTAS DE UM DETERMINADO MEDICO *\t";
     while (true) {
-            cout << "->Digite o crm do medico: " << endl;
-            cin >> CRM;
+            cout << "->Digite o identificador da Consulta: " << endl;
+            cin >> identificador;
 
             if (cin.fail()) {
                 cin.clear();  // Limpa o estado de erro
@@ -515,9 +514,10 @@ void Consultorio::imprimirConsultasDoMedico(){
         }
     while(consu)
     {
-        if(consu->getcrmMedico()==CRM){
+        if(consu->getIdentificador()==identificador){
         cout<<"=====================================================";
         cout<<endl;
+	cout<< "Identificador \t :"<<consu->getIdentificador()<<endl;
         cout << "data  \t: " << consu->getData()<< endl;
         cout << "horario \t: " << consu->getHora() << endl;
         cout << "CPF do paciente \t: " << consu->getcpfPaciente() << endl;
