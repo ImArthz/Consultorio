@@ -34,7 +34,7 @@ class Consultorio
 
         void imprimirListaDePacientes();
         void imprimirConsultas();
-        void imprimirConsultasDoMedico();
+        void imprimirConsultasPorIdentificador();
         void imprimirListaDeMedicos();
         
     private:
