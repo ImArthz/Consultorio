@@ -1,5 +1,6 @@
 #include <iostream>
 #include <locale>
+#include <string>
 #include "Consultorio.hpp"
 #include <cstdlib> // For the system function
 #include <limits> // Biblioteca para lidar com erros de leitura de inteiro
@@ -12,7 +13,8 @@ int main() {
     Medico *medico= new Medico();
     Paciente* paciente=new Paciente();
     bool saida = true;
-    int opcao;
+    int opcao,CrmRemove,IdenRemove;
+    string CpfRemove;
 
     while (saida) {
         cout << "----------------------MENU-------------------------"<<endl;
@@ -79,15 +81,19 @@ int main() {
                 }
 
             case 4:
+                consultorio->imprimirListaDeMedicos();
                 break;
 
             case 5:
+                consultorio->imprimirConsultas();
                 break;
 
             case 6:
+                consultorio->imprimirListaDePacientes();
                 break;
 
             case 7:
+                consultorio->imprimirConsultasPorIdentificador();
                 break;
 
             case 8:
@@ -109,14 +115,46 @@ int main() {
                 break;
 
             case 9:
-                break;
+                while (true) {
+                    cout << "->Digite o crm do medico que deseja remover: " << endl;
+                    cin >> CrmRemove;
+
+                    if (cin.fail()) {
+                        cin.clear();  // Limpa o estado de erro
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                        cout << "Entrada inválida. Digite um número inteiro." << endl;
+                    } else {
+                        // Entrada válida, podemos sair do loop
+                        break;
+                    }
+                }
+                consultorio->removerMedico(CrmRemove);
 
             case 10:
-                break;
+                cout<<"Digite o cpf do paciente que deseja remover: "<<endl;
+                cin.ignore();
+                getline(cin, CpfRemove);
+                consultorio->removerPaciente(CpfRemove);
 
             case 11:
+                while (true) {
+                    cout << "->Digite o identificador da consulta  que deseja remover: " << endl;
+                    cin >> IdenRemove;
+
+                    if (cin.fail()) {
+                        cin.clear();  // Limpa o estado de erro
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                        cout << "Entrada inválida. Digite um número inteiro." << endl;
+                    } else {
+                        // Entrada válida, podemos sair do loop
+                        break;
+                    }
+                }
+                consultorio->removerConsulta(IdenRemove);
                 break;
             case 12:
+                cout<<"Saindo ..."<<endl;
+                saida = false;
                 break;
 
         }
