@@ -76,15 +76,18 @@ O método `removerConsulta(int identificador)` permite que você remova uma cons
 
 ### Imprimir Dados dos Médicos
 
-Essa opção permite imprimir no console informações sobre todos os médicos cadastrados no sistema.
+o método `imprimirListaDeMedicos()` permite imprimir no console informações sobre todos os médicos cadastrados no sistema.
 
 ### Imprimir Dados dos Pacientes
 
-Essa opção permite imprimir no console informações sobre todos os pacientes cadastrados no sistema.
+o método `imprimirListaDePacientes()` permite imprimir no console informações sobre todos os pacientes cadastrados no sistema.
 
 ### Imprimir Informações sobre Consultas
 
-Essa opção permite imprimir no console informações sobre todas as consultas agendadas no sistema.
+o método `imprimirConsultas()` permite imprimir no console informações sobre todas as consultas agendadas no sistema.
+
+### Imprimir Consulta de acordo com o identificador fornecido 
+o metodo `imprimirConsultasPorIdentificador()` permite imprimir no console as informações sobre uma especifica consulta localizada através de um numero identificador.
 
 ### Abrir o Repositório no GitHub
 
