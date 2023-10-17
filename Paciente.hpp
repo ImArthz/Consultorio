@@ -6,10 +6,6 @@
 
 class Paciente:public Pessoa
 {
-    private:
-        string relato;
-        string Med_controlada;
-
     public:
     void setRelato(string relato);
 
@@ -19,9 +15,16 @@ class Paciente:public Pessoa
 
     string getMedCon();
 
+    void setProx(Paciente* prox);
+
+    Paciente* getProx();
+
     Paciente();
 
-    Paciente(string nome,string endereco,string cpf,char sexo, int telefone,int identidade,string relato,string Med_controlada);
-
+    Paciente(string nome,char sexo,string endereco,string cpf, int telefone,int identidade,string relato,string Med_controlada);
+    private:
+        string relato;
+        string Med_controlada;
+        Paciente* prox;
 };
 #endif

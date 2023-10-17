@@ -4,11 +4,24 @@
 #include "Consulta.hpp"
 #include <iostream>
 #include <string>
-#include <vector>
+#include <limits> // Biblioteca para lidar com erros de leitura de inteiro
+#include <random>// Biblioteca para gerar numeros aleatorios
 using namespace std;
 
-Consultorio::Consultorio(int telefone, string nome,string endereco):telefone(telefone),nome(nome),endereco(endereco){}
-Consultorio::Consultorio(){}
+Consultorio::Consultorio(ListaMedico* medicos, ListaPaciente* pacientes, ListaConsulta* consultas, string nome, string endereco, int telefone){
+    this-> medicos=medicos;
+    this->pacientes=pacientes;
+    this->consultas=consultas;
+    this->nome=nome;
+    this->endereco=endereco;
+    this->telefone=telefone;
+}
+Consultorio::Consultorio()
+{
+    this->medicos=new ListaMedico();
+    this->pacientes= new ListaPaciente();
+    this->consultas= new ListaConsulta();
+}
 void Consultorio::setTelefone(int telefone){
     this->telefone=telefone;
 }
@@ -27,17 +40,80 @@ void Consultorio::setEndereco(string endereco){
 string Consultorio::getEndereco(){
     return endereco;
 }
-bool Consultorio::cadastrarMedico(Medico* medico) {
-    for (Medico* m : listadeMedicos)
-        {
-            if (m->getCrm() == medico->getCrm())
-            {
-                throw std::runtime_error("Erro ao cadastrar Medico"); // Já existe um medico com o mesmo Crm
+bool Consultorio::cadastrarMedico() {
+    char SexoMed;
+    string NomeMed, EnderecoMed, cpfMed,especialidade;
+    int CRM, CRMverifica,FoneMed, IdMed;
+    Medico* medico=NULL;
+    Medico* med=medicos->getHead();
+    while (true) {
+            cout << "->Digite o crm do medico: " << endl;
+            cin >> CRMverifica;
+
+            if (cin.fail()) {
+                cin.clear();  // Limpa o estado de erro
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                cout << "Entrada inválida. Digite um número inteiro." << endl;
+            } else {
+                // Entrada válida, podemos sair do loop
+                break;
             }
         }
-        listadeMedicos.push_back(medico);
-        return true; // medico adicionado com sucesso
+    while(med)
+    {
+        if(med->getCrm()==CRMverifica){
+            medico=med;
+            cout<<"\nMedico ja foi cadastrado\n";
+            return false;
+        }
+        med=med->getProx();
+    }
+    if(medico==NULL)
+    {
+        cout<<"\n->nome completo: ";
+        cin.ignore();
+        getline(cin, NomeMed);
+        cout<<"->sexo: ";
+        cin>>SexoMed;
+        cout<<"->endereco: ";
+        getline(cin,EnderecoMed);
+        cout<<"->CPF: ";
+        getline(cin,cpfMed);
+        while (true) {
+            cout << "->Telefone : " << endl;
+            cin >> FoneMed;
+
+            if (cin.fail()) {
+                cin.clear();  // Limpa o estado de erro
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                cout << "Entrada inválida. Digite um número inteiro." << endl;
+            } else {
+                // Entrada válida, podemos sair do loop
+                break;
+            }
+        }
+        while (true) {
+            cout << "->Identitidade" << endl;
+            cin >> IdMed;
+
+            if (cin.fail()) {
+                cin.clear();  // Limpa o estado de erro
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                cout << "Entrada inválida. Digite um número inteiro." << endl;
+            } else {
+                // Entrada válida, podemos sair do loop
+                break;
+            }
+        }
+        //crm usada a anterior
+        cout<<"->especialização : ";
+        cin.ignore();
+        getline(cin,especialidade);
+        medicos->addMedico( NomeMed, SexoMed, EnderecoMed, cpfMed, FoneMed, IdMed, CRMverifica, especialidade);
+        return true;
+    }
 }
+
 bool Consultorio::removerMedico(int crm)
     {
         while(true){
@@ -48,16 +124,10 @@ bool Consultorio::removerMedico(int crm)
             //cin.ignore(); não é nescessario pois é tratado se nao for s/n
             getline(cin, op);
             if (op == "Sim" || op == "sim" || op == "S" || op == "s") {
-                for (size_t i = 0; i < listadeMedicos.size(); i++)
-                {
-                    if (listadeMedicos[i]->getCrm() == crm)
-                    {
-                        delete listadeMedicos[i]; // Libera a memória do médico
-                        listadeMedicos.erase(listadeMedicos.begin() + i);
-                        bool encontrado = true;
-                        return true; // Médico removido com sucesso
-                    }
-                }
+                
+                medicos->Remover_Medico(crm);
+                encontrado=true;
+                return true;
                 throw std::runtime_error("Erro ao remover médico"); 
                 return false; 
             
@@ -77,19 +147,71 @@ bool Consultorio::removerMedico(int crm)
         }
         
     }  
-bool Consultorio::cadastraPaciente(Paciente* paciente)
+bool Consultorio::cadastraPaciente()
+{
+    int FonePaci,IdPaci;
+    char SexoPaci;
+    string cpfPaci,NomePaci, EnderecoPaci, Relato, UltimaConsu, Medicacao ;
+    Paciente* paciente=NULL;
+    Paciente* paci=pacientes->getHead();
+    cout<<"->digite o cpf do paciente :"<<endl;
+    cin.ignore();
+    getline(cin,cpfPaci);
+    while(paci)
     {
-        for (Paciente* p : listadePacientes)
-        {
-            if (p->getCpf() == paciente->getCpf())
-            {
-                throw std::runtime_error("Erro ao cadastrar Paciente"); // Já existe um paciente com o mesmo CPF
+        if(paci->getCpf()==cpfPaci){
+            paciente=paci;
+            cout<<"\n Paciente ja esta cadastrado\n";
+            return false ;
+        }
+        paci=paci->getProx();
+    }
+    if(paciente==NULL)
+    {
+        cout<<"\n->nome completo: ";
+        getline(cin, NomePaci);
+        cout<<"->sexo: ";
+        cin>>SexoPaci;
+        cout<<"->endereco: ";
+        getline(cin,EnderecoPaci);
+        //usado o cpf anterior 
+        while (true) {
+            cout << "->Telefone" << endl;
+            cin >> FonePaci;
+
+            if (cin.fail()) {
+                cin.clear();  // Limpa o estado de erro
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                cout << "Entrada inválida. Digite um número inteiro." << endl;
+            } else {
+                // Entrada válida, podemos sair do loop
+                break;
             }
         }
-        listadePacientes.push_back(paciente);
-        return true; // Paciente adicionado com sucesso
+        while (true) {
+            cout << "->Identidade" << endl;
+            cin >> IdPaci;
+
+            if (cin.fail()) {
+                cin.clear();  // Limpa o estado de erro
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                cout << "Entrada inválida. Digite um número inteiro." << endl;
+            } else {
+                // Entrada válida, podemos sair do loop
+                break;
+            }
+        }
+        cout<<"->Informe os sintomas: ";
+        getline(cin,Relato);
+        cout<<"->medicação controlada consumida: ";
+        getline(cin,Medicacao);
+    
+        pacientes->addPaciente(NomePaci,SexoPaci,EnderecoPaci,cpfPaci, FonePaci, IdPaci, Relato, Medicacao);
+        return true;
+
     }
-bool Consultorio::removerPaciente(int cpf)
+}
+bool Consultorio::removerPaciente(string cpf)
     {
         while(true){
             string op;
@@ -99,21 +221,14 @@ bool Consultorio::removerPaciente(int cpf)
             //cin.ignore(); não é nescessario pois é tratado se nao for s/n
             getline(cin, op);
             if (op == "Sim" || op == "sim" || op == "S" || op == "s") {
-                for (size_t i = 0; i < listadePacientes.size(); i++)
-                {
-                    if (listadePacientes[i]->getCpf() == cpf)
-                    {
-                        delete listadePacientes[i]; // Libera a memória do paciente
-                        listadePacientes.erase(listadePacientes.begin() + i);
-                        encontrado = true;
-                        
-                        return true; // Paciente removido com sucesso
-                    }
-                }
-                return false; // Paciente não encontrado
+                pacientes->Remover_Paciente(cpf);
+                encontrado = true;    
+                return true; // Paciente removido com sucesso
             
                 if (!encontrado) {
                     cout << "O Paciente de Cpf: " << cpf << " não foi encontrado" << endl;
+                    return false; // Paciente não encontrado
+
                 }
             }
             else if (op == "Não" || op == "nao" || op == "N" || op == "n") {
@@ -128,19 +243,219 @@ bool Consultorio::removerPaciente(int cpf)
         }
         
     }  
-bool Consultorio::cadastrarConsulta(Consulta* consulta){
-    for (Consulta* c : listadeconsultas)
-        {
-            if (c->getIdentificador() == paciente->getIdentificador())
-            {
-                throw std::runtime_error("Erro ao cadastrar Consulta"); // Já existe um Consulta com o mesmo Identificador
+bool Consultorio::cadastrarConsulta(){
+    string hora,data,cpfPaciente; 
+    bool verificaMed=false, verificaPaci=false;
+    int crmMedico,cpfPaciente_;
+    int dia=0, mes=0, ano=0 ,anoaux=0;
+    int horaaux,horaaux2,identificador;
+    Consulta* con=consultas->getHead();
+    Paciente* paci=pacientes->getHead();
+    Medico* med=medicos->getHead();
+
+    while (true) {
+            cout << "->Digite o crm do medico" << endl;
+            cin >> crmMedico;
+
+            if (cin.fail()) {
+                cin.clear();  // Limpa o estado de erro
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                cout << "Entrada inválida. Digite um número inteiro." << endl;
+            } else {
+                // Entrada válida, podemos sair do loop
+                break;
             }
         }
-        listadeconsultas.push_back(consulta);
-        return true; // Consulta adicionado com sucesso
+
+    while (true) {
+            cout << "->Digite o cpf do paciente" << endl;
+            cin >> cpfPaciente_;
+
+            if (cin.fail()) {
+                cin.clear();  // Limpa o estado de erro
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                cout << "Entrada inválida. Digite um número inteiro." << endl;
+            } else {
+                // Entrada válida, podemos sair do loop
+                break;
+            }
+        }
+        cpfPaciente = cpfPaciente_;
+    while(med)
+    {
+        if(med->getCrm()==crmMedico){
+            verificaMed=true;
+            cout<<"\nMedico esta atendendo! proxima etapa...";
+            break;
+        }
+        med=med->getProx();
+    }
+    while(paci){
+        if(paci->getCpf()==cpfPaciente){
+            verificaPaci=true;
+            cout<<"\nPaciente esta cadastrado! Vamos para a proxima etapa...\n";
+            break;
+        }
+        paci=paci->getProx();
+    }
+    if(!verificaMed){
+        cout<<"\n Desculpe não temos medicos atendendo no momento";
+        return false;
+    }
+    if(!verificaPaci){
+        cout<<"\n Vocẽ ainda não é um paciente cadastrado";
+        return false;
+    }
+    if(verificaMed && verificaPaci)
+    {
+        cout<<"\n-> Informe o CPF do paciente: ";
+        cin.ignore();
+        getline(cin, cpfPaciente);
+        while (true) {
+            cout << "->Digite o crm do medico" << endl;
+            cin >> crmMedico;
+
+            if (cin.fail()) {
+                cin.clear();  // Limpa o estado de erro
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                cout << "Entrada inválida. Digite um número inteiro." << endl;
+            } else {
+                // Entrada válida, podemos sair do loop
+                break;
+            }
+        }
+        while (true) {
+            bool saidaaux= true;
+            cout << "->Digite o dia da consulta" << endl;
+            cin >> dia;
+
+            if (cin.fail()) {
+                cin.clear();  // Limpa o estado de erro
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                cout << "Entrada inválida. Digite um número inteiro." << endl;
+                saidaaux = false;
+            } else {
+                if(dia>31 || dia<1){
+                cout<<"Dia invalido\n";
+                saidaaux = false;
+                
+            }
+                if(saidaaux)
+                {
+                    // Entrada válida, podemos sair do loop
+                    break;
+                }
+            }   
+        }
+        while (true) {
+            bool saidaaux= true;
+            cout << "->Digite o mes da consulta" << endl;
+            cin >> mes;
+
+            if (cin.fail()) {
+                cin.clear();  // Limpa o estado de erro
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                cout << "Entrada inválida. Digite um número inteiro." << endl;
+                saidaaux = false;
+            } else {
+                if(mes>12 || mes<1){
+                cout<<"mes invalido\n";
+                saidaaux = false;
+                }
+            }
+                if(saidaaux)
+                {
+                    break;
+                }
+            }
+            
+        while (true) {
+            bool saidaaux= true;
+            cout << "->Digite o ano da consulta" << endl;
+            cin >> ano;
+
+            if (cin.fail()) {
+                cin.clear();  // Limpa o estado de erro
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                cout << "Entrada inválida. Digite um número inteiro." << endl;
+                saidaaux=false;
+            } else {
+                if(ano>2035 || ano<2022){
+                cout<<"ano invalido\n";
+                saidaaux = false;
+                
+            }
+                if(saidaaux)
+                {
+                    // Entrada válida, podemos sair do loop
+                    break;
+                }
+            }   
+        }
+        anoaux = ano;
+        string data = to_string(dia) + "/" + to_string(mes) + "/" + to_string(ano);
+        while (true) {
+            bool aux = true;
+            cout << "->Digite a hora " << endl;
+            cin >> horaaux;
+
+            if (cin.fail()) {
+                cin.clear();  // Limpa o estado de erro
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                cout << "Entrada inválida. Digite um número inteiro." << endl;
+                aux = false;
+            } else {
+                if(horaaux>24 || horaaux<0){
+                    cout<<"Hora invalida!\n";  
+                    aux = false;
+                    }
+            }
+            if (aux)
+            {
+                // Entrada válida, podemos sair do loop
+                break;
+            }
+        }
+            while (true) {
+            bool aux = true;
+            cout << "->Digite os minutos" << endl;
+            cin >> horaaux2;
+
+            if (cin.fail()) {
+                cin.clear();  // Limpa o estado de erro
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                cout << "Entrada inválida. Digite um número inteiro." << endl;
+                aux = false;
+            } else {
+                if(horaaux2>60 || horaaux2<0){
+                    cout<<"minutos invalida!\n";  
+                    aux = false;
+                    }
+            }
+            if (aux)
+            {
+                // Entrada válida, podemos sair do loop
+                break;
+            }
+        }
+        //funções da biblioteca para gerar numero identificador 
+        random_device rd;
+        mt19937 mt(rd());
+        // Defina o intervalo e gere números inteiros com até 3 dígitos.
+        std::uniform_int_distribution<int> dist(100, 999);
+        int identificador = anoaux + dist(mt);
+        cout<<"Numero identificador da Consulta = "<<identificador<<endl;
+
+        string hora = to_string(horaaux)+":"+to_string(horaaux2);
+
+        
+        consultas->add_Consulta(data, hora,crmMedico,cpfPaciente_,identificador);
+        return true;
+    }
 }
+
 bool Consultorio::removerConsulta(int identificador)
-{
+    {
         while(true){
             string op;
             bool encontrado = false;
@@ -149,21 +464,11 @@ bool Consultorio::removerConsulta(int identificador)
             //cin.ignore(); não é nescessario pois é tratado se nao for s/n
             getline(cin, op);
             if (op == "Sim" || op == "sim" || op == "S" || op == "s") {
-                for (size_t i = 0; i < listadeconsultas.size(); i++)
-                {
-                    if (listadeconsultas[i]->getIdentificador() == identificador)
-                    {
-                        delete listadeconsultas[i]; // Libera a memória da consulta
-                        listadeconsultas.erase(listadeconsultas.begin() + i);
-                        encontrado = true;
-                        
-                        return true; // Consulta removida com sucesso
-                    }
-                }
-                return false; // Consulta não encontrada
-            
+                consultas->Remover_Consulta(identificador);
+                encontrado = true;
+                return true; // Consulta removida com sucesso     
                 if (!encontrado) {
-                    cout << "A Consulta de Identificador: " << Identificador<< " não foi encontrada" << endl;
+                    cout << "A Consulta de Identificador: " << identificador<< " não foi encontrada" << endl;
                 }
             }
             else if (op == "Não" || op == "nao" || op == "N" || op == "n") {
@@ -177,61 +482,4 @@ bool Consultorio::removerConsulta(int identificador)
             }
         }
         
-    }  
-void Consultorio:: imprimirDadosConsultaEspecifica(Consultorio consultorio) {
-    int identificador;
-    cout << "Digite o identificador da consulta: ";
-    cin >> identificador;
-
-    bool consultaEncontrada = false;
-
-    for (const Consulta* consulta : consultorio.listadeconsultas) {
-        if (consulta->getIdentificador() == identificador) {
-            consultaEncontrada = true;
-
-            cout << "\tDados da Consulta" << endl;
-            cout << "Identificador: " << consulta->getIdentificador() << endl;
-            cout << "Data: " << consulta->getData() << endl;
-            cout << "Hora: " << consulta->getHora() << endl;
-            cout << "CPF do Paciente: " << consulta->getcpfPaciente() << endl;
-            cout << "CRM do Médico: " << consulta->getcrmMedico() << endl;
-            break;  // Encerra o loop após encontrar a consulta
-        }
-    }
-
-    if (!consultaEncontrada) {
-        cout << "Consulta com identificador " << identificador << " não encontrada." << endl;
-    }
-}
-bool Consultorio::pacienteExiste(int cpf) {
-    for (Paciente* paciente : listaPacientes) {
-        if (paciente->getCpf() == cpf) {
-            return true; // O paciente com o CPF fornecido existe
-        }
-    }
-    return false; // O paciente com o CPF fornecido não existe
-}
-bool Medico::medicoExiste(int crm) {
-    for (Medico* medico : listaMedicos) {
-        if (medico->getCrm() == crm) {
-            return true; // O médico com o CRM fornecido existe
-        }
-    }
-    return false; // O médico com o CRM fornecido não existe
-}
-~Consultorio()
-    {
-        // Libera a memória alocada para pacientes, médicos e consultas
-        for (Medico* medico : listadeMedicos)
-        {
-            delete medico;
-        }
-        for (Paciente* paciente : listadePacientes)
-        {
-            delete paciente;
-        }
-        for (Consulta* consulta : listadeconsultas)
-        {
-            delete consulta;
-        }
     }

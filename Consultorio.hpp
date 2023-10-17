@@ -5,21 +5,15 @@
 #include "Paciente.hpp"
 #include "Medico.hpp"
 #include <string>
-#include <vector>
+#include "Lista_Medico.hpp"
+#include "Lista_Paciente.hpp"
+#include "Lista_Consulta.hpp"
 using namespace std;
 
 class Consultorio
 {
-    private:
-        int telefone;
-        string nome, endereco;
-        vector<Medico*> listadeMedicos;
-        vector<Paciente*> listadePacientes;
-        vector<Consulta*> listadeconsultas;
-
-    
     public:
-        Consultorio(int telefone, string nome, string endereco);
+        Consultorio(ListaMedico* medicos, ListaPaciente* pacientes, ListaConsulta* consultas, string nome, string endereco, int telefone);
         Consultorio();
         ~Consultorio();
         void setTelefone(int telefone);
@@ -29,23 +23,27 @@ class Consultorio
         void setEndereco(string endereco);
         string getEndereco();
 
-        bool cadastraPaciente(Paciente* paciente);
-        bool removerPaciente(Paciente* paciente);
+        bool cadastraPaciente();
+        bool removerPaciente(string cpf);
 
-        bool cadastrarMedico(Medico* medico);
-        bool removerMedico(Medico* medico);
+        bool cadastrarMedico();
+        bool removerMedico(int crm);
 
-        bool cadastrarConsulta(Consulta* consulta);
-        bool removerConsulta(Consulta* consulta);
+        bool cadastrarConsulta();
+        bool removerConsulta(int identificador);
 
         void imprimirListaDePacientes();
         void imprimirConsultas();
         void imprimirConsultasDoMedico();
         void imprimirListaDeMedicos();
-        void imprimirDadosConsultaEspecifica(Consultorio consultorio)
         
-        bool pacienteExiste(int cpf);
-        bool medicoExiste(int crm);
+    private:
+        int telefone;
+        string nome, endereco;
+        ListaMedico* medicos;
+        ListaPaciente* pacientes;
+        ListaConsulta* consultas;
+        static int contador_paciente;
 
 };
 #endif

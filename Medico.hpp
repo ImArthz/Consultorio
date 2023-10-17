@@ -14,14 +14,19 @@ class Medico: public Pessoa {
 
     string getEsp();
 
+    void setProx(Medico* prox);
+
+    Medico* getProx();
+
     Medico();
     
-    Medico(string nome,string endereco,string cpf,char sexo, int telefone,int identidade,int crm,string especializacao);
+    Medico(string nome,char sexo,string endereco,string cpf, int telefone,int identidade,int crm,string especializacao);
 
     
     private:
     int crm;
     string especializacao;
+    Medico* prox;
 
     
         

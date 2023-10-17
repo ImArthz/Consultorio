@@ -3,8 +3,15 @@
 #include <string>
 using namespace std;
 
-Consulta::Consulta(string data, string hora, int cpfPaciente, int crmMedico,int identificador):data(data),hora(hora),cpfPaciente(cpfPaciente),crmMedico(crmMedico),identificador(identificador){}
-Consulta:: Consulta(){}
+Consulta::Consulta(string data, string hora, int cpfPaciente, int crmMedico,int identificador):data(data),hora(hora),cpfPaciente(cpfPaciente),crmMedico(crmMedico),identificador(identificador)
+{
+  this-> prox = NULL;
+}
+Consulta:: Consulta()
+{
+  this -> prox = NULL;
+
+}
 void Consulta :: setData(string data){
   this -> data = data;
 }
@@ -53,3 +60,10 @@ void Consulta :: imprimir_consulta()
     cout << "-------------------------"<<endl;
 
 }
+void Consulta::setProx(Consulta* prox){
+    this->prox=prox;
+}
+Consulta* Consulta::getProx(){
+    return prox;
+}
+

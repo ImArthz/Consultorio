@@ -5,13 +5,7 @@
 
 using namespace std;
 class Pessoa {
-    private:
-        string nome;
-        string endereco;
-        string cpf;
-        char sexo;
-        int telefone;
-        int identidade;   
+
     public:
         void setNome(string nome);
     
@@ -41,5 +35,12 @@ class Pessoa {
         Pessoa();
 
         void imprimir();
+    private:
+        string nome;
+        string endereco;
+        string cpf;
+        char sexo;
+        int telefone;
+        int identidade;   
 };
 #endif

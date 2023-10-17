@@ -34,9 +34,14 @@ public:
 
     void imprimir_consulta();
 
+    void setProx(Consulta* prox);
+    
+    Consulta* getProx();
+
 private:
     string data,hora;
     int cpfPaciente, crmMedico,identificador;
+    Consulta* prox;
 };
 
 #endif
