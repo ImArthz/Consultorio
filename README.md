@@ -7,6 +7,14 @@ Este é um sistema simples de consultório médico que permite a gestão de méd
 - Um compilador C++ instalado
 - Um sistema operacional Linux ou macOS
 
+## Diagrama de Classes
+
+Abaixo está o diagrama de classes do projeto:
+
+![Diagrama de Classes](https://github.com/ImArthz/Consultorio/blob/main/Consultorio.drawio.png)
+
+Neste diagrama, você pode visualizar a estrutura e os relacionamentos das classes que compõem o sistema do Consultório.
+
 ## Funcionalidades
 
 - Cadastrar médicos
@@ -91,8 +99,60 @@ o método `imprimirConsultas()` permite imprimir no console informações sobre 
 o metodo `imprimirConsultasPorIdentificador()` permite imprimir no console as informações sobre uma especifica consulta localizada através de um numero identificador.
 
 ### Abrir o Repositório no GitHub
+Nesse trecho abaixo , estamos abrindo o repositório do código no GitHub em um navegador da web padrão. 
+```bash
+string link = "https://github.com/ImArthz/Consultorio";
 
-Essa opção abrirá o repositório do projeto no GitHub no navegador da web.
+// Construindo o comando para abrir a URL no navegador padrão
+string command = "xdg-open " + link;
+
+// Usando a função do sistema para executar o comando
+int result = system(command.c_str());
+
+// Verificando o resultado da chamada do sistema
+if (result == 0) {
+    cout << "Navegador da web aberto com sucesso." << endl;
+} else {
+    cerr << "Falha ao abrir o navegador da web." << endl;
+}
+
+break;
+```
+Aqui está a explicação:
+
+string link contém a URL do seu repositório no GitHub.
+
+string command é uma string que armazena o comando que será executado para abrir a URL no navegador padrão. No seu caso, está usando o comando xdg-open, que é específico para sistemas Linux. Para sistemas Windows, você pode usar start em vez de xdg-open.
+
+system(command.c_str()) é usado para executar o comando do sistema armazenado na variável command. Isso abre o navegador da web padrão e carrega a URL fornecida.
+
+result armazena o valor retornado pela função system. Se a chamada for bem-sucedida, result será 0. Caso contrário, será diferente de 0.
+
+O bloco if (result == 0) verifica se a chamada do sistema foi bem-sucedida e exibe uma mensagem correspondente. Se a abertura do navegador for bem-sucedida, a mensagem "Navegador da web aberto com sucesso" é exibida. Caso contrário, a mensagem "Falha ao abrir o navegador da web" é exibida.
+
+Esse trecho é útil para permitir que os usuários acessem facilmente o repositório do seu código no GitHub, facilitando a visualização, colaboração e download do projeto.
+### Tratamento de excessão
+
+Em várias partes do código, estamos fazendo uso da biblioteca #include <limits> para realizar o tratamento de exceções. Esse tratamento é útil para lidar com entradas de dados do usuário e garantir que essas entradas sejam válidas, especialmente quando se espera um número inteiro. O trecho de código abaixo ilustra como isso é feito:
+```bash
+while (true) {
+    cout << "->Digite um número inteiro: " << endl;
+    cin >> Nome_da_sua_variavel_inteira;
+
+    if (cin.fail()) {
+        cin.clear();  // Limpa o estado de erro
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+        cout << "Entrada inválida. Por favor, digite um número inteiro." << endl;
+    } else {
+        // A entrada é válida, e podemos sair do loop
+        // Outros tratamentos, como verificar se a variável está dentro de um intervalo desejado, podem ser feitos aqui.
+        break;
+    }
+}
+```
+Nesse trecho, o programa solicita ao usuário que insira um número inteiro. Se o usuário fornecer um valor inválido (por exemplo, um caractere não numérico), o bloco if (cin.fail()) identifica esse erro. Em seguida, a função cin.clear() é usada para limpar o estado de erro e permitir que o programa continue a execução. Além disso, cin.ignore() é usado para descartar a entrada inválida que causou o erro. Em seguida, uma mensagem de erro é exibida para orientar o usuário.
+
+Se o usuário inserir um número inteiro válido, o programa continuará sua execução normalmente. Esse tratamento de exceção é fundamental para evitar falhas inesperadas no programa devido a entradas incorretas. Além disso, é possível adicionar verificações adicionais, como garantir que o número esteja dentro de um intervalo específico, antes de prosseguir com o processamento dos dados.
 
 ## Como Executar
 
