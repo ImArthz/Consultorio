@@ -1,6 +1,7 @@
 # Consultório Médico
 
 Este é um sistema simples de consultório médico que permite a gestão de médicos, pacientes e consultas. O sistema foi desenvolvido em C++.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Pré-requisitos
 - Um compilador C++ instalado
@@ -145,7 +146,7 @@ git push origin minha-contribuicao
 Abra um pull request neste repositório original.
 
 ## Licença
-Este projeto está licenciado sob a Licença MIT: [LICENSE].
+Este projeto está licenciado sob a [Licença MIT](LICENSE). Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 **Autor:** Arthur De Oliveira Mendonça 
 
