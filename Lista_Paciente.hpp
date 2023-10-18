@@ -5,12 +5,12 @@ using namespace std;
 class ListaPaciente{
 
 public:
-    ListaPaciente(string nome,char sexo, string endereco, string cpf, int telefone, int identidade, string relato, string Med_controlada);
+    ListaPaciente(string nome,string endereco, string cpf,char sexo, int telefone, int identidade, string relato, string Med_controlada);
 
     ListaPaciente();
 
 
-    void addPaciente(string nome,char sexo, string endereco, string cpf, int telefone, int identidade, string relato, string Med_controlada);
+    void addPaciente(string nome ,string endereco, string cpf,char sexo, int telefone, int identidade, string relato, string Med_controlada);
 
     void Imprimir_Paciente();
 

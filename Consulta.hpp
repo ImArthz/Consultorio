@@ -8,7 +8,7 @@ using namespace std;
 
 class Consulta {
 public:
-    Consulta(string data, string hora, int cpfPaciente, int crmMedico,int identificador);
+    Consulta(string data, string hora, string cpfPaciente, int crmMedico,int identificador);
 
     Consulta();
 
@@ -24,9 +24,9 @@ public:
 
     int getIdentificador();
 
-    void setcpfPaciente(int cpfPaciente);
+    void setcpfPaciente(string cpfPaciente);
 
-    int getcpfPaciente();
+    string getcpfPaciente();
 
     void setcrmMedico(int crmMedico);
 
@@ -39,8 +39,8 @@ public:
     Consulta* getProx();
 
 private:
-    string data,hora;
-    int cpfPaciente, crmMedico,identificador;
+    string data,hora,cpfPaciente;
+    int crmMedico,identificador;
     Consulta* prox;
 };
 

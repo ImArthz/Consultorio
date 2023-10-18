@@ -1,8 +1,9 @@
 #include<iostream> 
 #include "Lista_Consulta.hpp"
+#include <string>
 using namespace std;
 
-ListaConsulta::ListaConsulta(string data,string hora, int cpfPaciente, int crmMedico,int identificador){
+ListaConsulta::ListaConsulta(string data,string hora, string cpfPaciente, int crmMedico,int identificador){
     head = new Consulta(data, hora, cpfPaciente, crmMedico,identificador);
 	tail = head;  
 }
@@ -31,21 +32,20 @@ Consulta* ListaConsulta::getTail(){
 void ListaConsulta::setTail(Consulta* tail){
     this->tail=tail;
 }
-void ListaConsulta:: add_Consulta(string data, string hora, int cpfPaciente, int crmMedico,int identificador){
-   Consulta* cons=new Consulta(data, hora, cpfPaciente, crmMedico,identificador);
-   if(vazia())
-   {
-       head=cons;
-       tail=cons;
-   }
-   else if(!existe(cons->getData(), hora,crmMedico, cpfPaciente,identificador)){
+void ListaConsulta:: add_Consulta(string data, string hora, string cpfPaciente, int crmMedico,int identificador){
+    Consulta* cons=new Consulta(data, hora, cpfPaciente, crmMedico,identificador);
+    if(vazia())
+    {
+        head=cons;
+        tail=cons;
+    }
+    else if(!existe(cons->getData(), hora,crmMedico, cpfPaciente,identificador)){
         tail->setProx(cons);
         tail=cons;
-   }
+    }
     else{
         cout<<"Consulta ja existe neste dia e horario";
     }
-   
 }
 void ListaConsulta::Remover_Consulta(int identificador){
 
@@ -87,28 +87,29 @@ void ListaConsulta::Remover_Consulta(int identificador){
 }
 void ListaConsulta:: Imprimir_Consulta(){
     Consulta* cons=head;
-     if(vazia())
-   {
-       head=cons;
-       tail=cons;
-       cout<<"\n Não ha consultas!! \n";
-   }
-   else{
+    if(vazia())
+    {
+        head=cons;
+        tail=cons;
+        cout<<"\n Não ha consultas!! \n";
+    }
+    else{
         while(cons){
         cout<<"---------------------------------------------------------------";
         cout<<endl;
-        cout << "Data : \t" << cons->getData();
-        cout << "Hora: \t" << cons->getHora() << endl;
-        cout << "CPF do paciente: \t" << cons->getcpfPaciente() << endl;
-        cout << "CRM do medico: \t"<< cons->getcrmMedico() << endl;
+        cout << "Identificador :" << cons->getIdentificador()<<endl;
+        cout << "Data : " << cons->getData()<<endl;
+        cout << "Hora: " << cons->getHora() << endl;
+        cout << "CPF do paciente: " << cons->getcpfPaciente() << endl;
+        cout << "CRM do medico: "<< cons->getcrmMedico() << endl;
         cout<<endl;
         cout<<"---------------------------------------------------------------";
         cons=cons->getProx();
         }
-   }
+    }
 }
 
-bool ListaConsulta::existe(string data,string hora,int crmMedico, int cpfPaciente,int identificador)
+bool ListaConsulta::existe(string data,string hora,int crmMedico, string cpfPaciente,int identificador)
 {
     if(vazia())
     return false;

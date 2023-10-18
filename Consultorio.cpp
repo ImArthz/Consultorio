@@ -75,12 +75,22 @@ bool Consultorio::cadastrarMedico() {
         getline(cin, NomeMed);
         cout<<"->sexo: ";
         cin>>SexoMed;
+        cin.ignore();
         cout<<"->endereco: ";
         getline(cin,EnderecoMed);
-        cout<<"->CPF: ";
-        getline(cin,cpfMed);
         while (true) {
-            cout << "->Telefone : " << endl;
+            cout << "->Digite o cpf do paciente : ";
+            cin >> cpfMed;
+            // Verifique o comprimento da string para garantir que seja um CPF válido
+            if (cpfMed.length() == 11) {
+                // CPF tem 11 dígitos, o que é um CPF válido
+                break;
+            }   else {
+                cout << "CPF inválido. Digite um CPF com 11 dígitos." << endl;
+            }
+        }
+        while (true) {
+            cout << "->Telefone : ";
             cin >> FoneMed;
 
             if (cin.fail()) {
@@ -93,7 +103,7 @@ bool Consultorio::cadastrarMedico() {
             }
         }
         while (true) {
-            cout << "->Identitidade" << endl;
+            cout << "->Identitidade : ";
             cin >> IdMed;
 
             if (cin.fail()) {
@@ -112,6 +122,7 @@ bool Consultorio::cadastrarMedico() {
         medicos->addMedico( NomeMed, SexoMed, EnderecoMed, cpfMed, FoneMed, IdMed, CRMverifica, especialidade);
         return true;
     }
+    return true;
 }
 
 bool Consultorio::removerMedico(int crm)
@@ -121,7 +132,7 @@ bool Consultorio::removerMedico(int crm)
             bool encontrado = false;
             cout << "Tem certeza disso ?  (S/N)?" << endl;
             cout <<" Ao digitar sim o Medico de crm"<<crm<< " sera permanentemente excluido"<<endl;
-            //cin.ignore(); não é nescessario pois é tratado se nao for s/n
+            cin.ignore();
             getline(cin, op);
             if (op == "Sim" || op == "sim" || op == "S" || op == "s") {
                 
@@ -137,7 +148,7 @@ bool Consultorio::removerMedico(int crm)
             }
             else if (op == "Não" || op == "nao" || op == "N" || op == "n") {
                 cout << "Voltando ao menu" << endl;
-                return; // Sai da função se o usuário decide não excluir o Medico;
+                return false ; // Sai da função se o usuário decide não excluir o Medico;
             }
     
             else 
@@ -151,12 +162,20 @@ bool Consultorio::cadastraPaciente()
 {
     int FonePaci,IdPaci;
     char SexoPaci;
-    string cpfPaci,NomePaci, EnderecoPaci, Relato, UltimaConsu, Medicacao ;
+    string cpfPaci,NomePaci, EnderecoPaci, Relato, UltimaConsu, Medicacao;
     Paciente* paciente=NULL;
     Paciente* paci=pacientes->getHead();
-    cout<<"->digite o cpf do paciente :"<<endl;
-    cin.ignore();
-    getline(cin,cpfPaci);
+    while (true) {
+            cout << "->Digite o cpf do paciente : ";
+            cin >> cpfPaci;
+            // Verifique o comprimento da string para garantir que seja um CPF válido
+            if (cpfPaci.length() == 11) {
+                // CPF tem 11 dígitos, o que é um CPF válido
+                break;
+            }   else {
+                cout << "CPF inválido. Digite um CPF com 11 dígitos." << endl;
+            }
+        }
     while(paci)
     {
         if(paci->getCpf()==cpfPaci){
@@ -169,14 +188,15 @@ bool Consultorio::cadastraPaciente()
     if(paciente==NULL)
     {
         cout<<"\n->nome completo: ";
+        cin.ignore();
         getline(cin, NomePaci);
         cout<<"->sexo: ";
         cin>>SexoPaci;
+        cin.ignore();
         cout<<"->endereco: ";
         getline(cin,EnderecoPaci);
-        //usado o cpf anterior 
         while (true) {
-            cout << "->Telefone" << endl;
+            cout << "->Telefone : ";
             cin >> FonePaci;
 
             if (cin.fail()) {
@@ -189,7 +209,7 @@ bool Consultorio::cadastraPaciente()
             }
         }
         while (true) {
-            cout << "->Identidade" << endl;
+            cout << "->Identidade : ";
             cin >> IdPaci;
 
             if (cin.fail()) {
@@ -202,14 +222,16 @@ bool Consultorio::cadastraPaciente()
             }
         }
         cout<<"->Informe os sintomas: ";
+        cin.ignore();
         getline(cin,Relato);
         cout<<"->medicação controlada consumida: ";
         getline(cin,Medicacao);
-    
-        pacientes->addPaciente(NomePaci,SexoPaci,EnderecoPaci,cpfPaci, FonePaci, IdPaci, Relato, Medicacao);
+        pacientes->addPaciente(NomePaci,EnderecoPaci,cpfPaci,SexoPaci,FonePaci,IdPaci, Relato, Medicacao);
         return true;
 
     }
+
+    return true;
 }
 bool Consultorio::removerPaciente(string cpf)
     {
@@ -233,7 +255,7 @@ bool Consultorio::removerPaciente(string cpf)
             }
             else if (op == "Não" || op == "nao" || op == "N" || op == "n") {
                 cout << "Voltando ao menu" << endl;
-                return; // Sai da função se o usuário decide não excluir o Paciente;
+                return false; // Sai da função se o usuário decide não excluir o Paciente;
             }
     
             else 
@@ -246,7 +268,7 @@ bool Consultorio::removerPaciente(string cpf)
 bool Consultorio::cadastrarConsulta(){
     string hora,data,cpfPaciente; 
     bool verificaMed=false, verificaPaci=false;
-    int crmMedico,cpfPaciente_;
+    int crmMedico;
     int dia=0, mes=0, ano=0 ,anoaux=0;
     int horaaux,horaaux2,identificador;
     Consulta* con=consultas->getHead();
@@ -254,7 +276,7 @@ bool Consultorio::cadastrarConsulta(){
     Medico* med=medicos->getHead();
 
     while (true) {
-            cout << "->Digite o crm do medico" << endl;
+            cout << "->Digite o crm do medico : ";
             cin >> crmMedico;
 
             if (cin.fail()) {
@@ -268,19 +290,16 @@ bool Consultorio::cadastrarConsulta(){
         }
 
     while (true) {
-            cout << "->Digite o cpf do paciente" << endl;
-            cin >> cpfPaciente_;
-
-            if (cin.fail()) {
-                cin.clear();  // Limpa o estado de erro
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
-                cout << "Entrada inválida. Digite um número inteiro." << endl;
-            } else {
-                // Entrada válida, podemos sair do loop
+            cout << "->Digite o cpf do paciente : ";
+            cin >> cpfPaciente;
+            // Verifique o comprimento da string para garantir que seja um CPF válido
+            if (cpfPaciente.length() == 11) {
+                // CPF tem 11 dígitos, o que é um CPF válido
                 break;
+            }   else {
+                cout << "CPF inválido. Digite um CPF com 11 dígitos." << endl;
             }
         }
-        cpfPaciente = cpfPaciente_;
     while(med)
     {
         if(med->getCrm()==crmMedico){
@@ -308,25 +327,10 @@ bool Consultorio::cadastrarConsulta(){
     }
     if(verificaMed && verificaPaci)
     {
-        cout<<"\n-> Informe o CPF do paciente: ";
-        cin.ignore();
-        getline(cin, cpfPaciente);
-        while (true) {
-            cout << "->Digite o crm do medico" << endl;
-            cin >> crmMedico;
-
-            if (cin.fail()) {
-                cin.clear();  // Limpa o estado de erro
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
-                cout << "Entrada inválida. Digite um número inteiro." << endl;
-            } else {
-                // Entrada válida, podemos sair do loop
-                break;
-            }
-        }
         while (true) {
             bool saidaaux= true;
-            cout << "->Digite o dia da consulta" << endl;
+            cout << "->Digite o dia da consulta : ";
+            cin.ignore();
             cin >> dia;
 
             if (cin.fail()) {
@@ -349,7 +353,7 @@ bool Consultorio::cadastrarConsulta(){
         }
         while (true) {
             bool saidaaux= true;
-            cout << "->Digite o mes da consulta" << endl;
+            cout << "->Digite o mes da consulta";
             cin >> mes;
 
             if (cin.fail()) {
@@ -371,7 +375,7 @@ bool Consultorio::cadastrarConsulta(){
             
         while (true) {
             bool saidaaux= true;
-            cout << "->Digite o ano da consulta" << endl;
+            cout << "->Digite o ano da consulta";
             cin >> ano;
 
             if (cin.fail()) {
@@ -382,6 +386,7 @@ bool Consultorio::cadastrarConsulta(){
             } else {
                 if(ano>2035 || ano<2022){
                 cout<<"ano invalido\n";
+                cout<<"Nossa agenda permite cadastro de consultas de 2023 até 2034"<<endl;
                 saidaaux = false;
                 
             }
@@ -396,7 +401,7 @@ bool Consultorio::cadastrarConsulta(){
         string data = to_string(dia) + "/" + to_string(mes) + "/" + to_string(ano);
         while (true) {
             bool aux = true;
-            cout << "->Digite a hora " << endl;
+            cout << "->Digite a hora : ";
             cin >> horaaux;
 
             if (cin.fail()) {
@@ -409,6 +414,9 @@ bool Consultorio::cadastrarConsulta(){
                     cout<<"Hora invalida!\n";  
                     aux = false;
                     }
+                else if(horaaux>=18||horaaux<=6){
+                    cout<<"Desculpa so atendemos nos horarios de 06:00 até as 18:00"<<endl;
+                }
             }
             if (aux)
             {
@@ -418,7 +426,7 @@ bool Consultorio::cadastrarConsulta(){
         }
             while (true) {
             bool aux = true;
-            cout << "->Digite os minutos" << endl;
+            cout << "->Digite os minutos : " ;
             cin >> horaaux2;
 
             if (cin.fail()) {
@@ -443,15 +451,16 @@ bool Consultorio::cadastrarConsulta(){
         mt19937 mt(rd());
         // Defina o intervalo e gere números inteiros com até 3 dígitos.
         std::uniform_int_distribution<int> dist(100, 999);
-        int identificador = anoaux + dist(mt);
+        int identificador = anoaux*1000 + dist(mt);
         cout<<"Numero identificador da Consulta = "<<identificador<<endl;
 
         string hora = to_string(horaaux)+":"+to_string(horaaux2);
 
         
-        consultas->add_Consulta(data, hora,crmMedico,cpfPaciente_,identificador);
+        consultas->add_Consulta(data, hora,cpfPaciente,crmMedico,identificador);
         return true;
     }
+    return true;
 }
 
 bool Consultorio::removerConsulta(int identificador)
@@ -461,7 +470,7 @@ bool Consultorio::removerConsulta(int identificador)
             bool encontrado = false;
             cout << "Tem certeza disso ?  (S/N)?" << endl;
             cout <<" Ao digitar sim a consulta de identificador "<<identificador<< " sera permanentemente excluida"<<endl;
-            //cin.ignore(); não é nescessario pois é tratado se nao for s/n
+            cin.ignore();
             getline(cin, op);
             if (op == "Sim" || op == "sim" || op == "S" || op == "s") {
                 consultas->Remover_Consulta(identificador);
@@ -473,7 +482,7 @@ bool Consultorio::removerConsulta(int identificador)
             }
             else if (op == "Não" || op == "nao" || op == "N" || op == "n") {
                 cout << "Voltando ao menu" << endl;
-                return; // Sai da função se o usuário decide não excluir a consulta;
+                return false ; // Sai da função se o usuário decide não excluir a consulta;
             }
     
             else 
@@ -492,12 +501,12 @@ void Consultorio::imprimirListaDeMedicos(){
 			medicos->Imprimir_Medico();
 
 }
-void Consultorio::imprimirConsultas();(){
+void Consultorio::imprimirConsultas(){
     cout << "\tImprimindo Consultas...\t\n";
 			consultas->Imprimir_Consulta();
 }
 void Consultorio::imprimirConsultasPorIdentificador(){
-    int CRM;
+    int identificador;
     Consulta* consu=consultas->getHead();
     while (true) {
             cout << "->Digite o identificador da Consulta: " << endl;
@@ -517,11 +526,11 @@ void Consultorio::imprimirConsultasPorIdentificador(){
         if(consu->getIdentificador()==identificador){
         cout<<"=====================================================";
         cout<<endl;
-	cout<< "Identificador \t :"<<consu->getIdentificador()<<endl;
-        cout << "data  \t: " << consu->getData()<< endl;
-        cout << "horario \t: " << consu->getHora() << endl;
-        cout << "CPF do paciente \t: " << consu->getcpfPaciente() << endl;
-        cout << "CRM do medico \t: "<< consu->getcrmMedico() << endl;
+	cout<< "Identificador  :"<<consu->getIdentificador()<<endl;
+        cout << "data  : " << consu->getData()<< endl;
+        cout << "horario : " << consu->getHora() << endl;
+        cout << "CPF do paciente : " << consu->getcpfPaciente() << endl;
+        cout << "CRM do medico : "<< consu->getcrmMedico() << endl;
         cout<<endl;
         cout<<"=====================================================\n";
         }

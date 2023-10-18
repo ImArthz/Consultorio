@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 
-Consulta::Consulta(string data, string hora, int cpfPaciente, int crmMedico,int identificador):data(data),hora(hora),cpfPaciente(cpfPaciente),crmMedico(crmMedico),identificador(identificador)
+Consulta::Consulta(string data, string hora, string cpfPaciente, int crmMedico,int identificador):data(data),hora(hora),cpfPaciente(cpfPaciente),crmMedico(crmMedico),identificador(identificador)
 {
   this-> prox = NULL;
 }
@@ -30,12 +30,12 @@ void Consulta :: setIdentificador(int identificador){
 int Consulta :: getIdentificador(){
     return identificador;
 }
-void Consulta :: setcpfPaciente(int cpfPaciente)
+void Consulta :: setcpfPaciente(string cpfPaciente)
 {
     this->cpfPaciente=cpfPaciente;
 }
 
-int Consulta :: getcpfPaciente()
+string Consulta :: getcpfPaciente()
 {
     return cpfPaciente;
 }
@@ -53,8 +53,8 @@ void Consulta :: imprimir_consulta()
     cout << "\t\tConsulta"<<endl;
     cout << "-------------------------"<<endl;
     cout << "Identificador: \t"<<getIdentificador()<<endl;
-    cout << "Data: \t" << getData<< endl;
-    cout << "Hora: \t" << getHora << endl;
+    cout << "Data: \t" << getData()<< endl;
+    cout << "Hora: \t" << getHora() << endl;
     cout << "Cpf do Paciente: \t" << getcpfPaciente() << endl;
     cout << "Crm do Médico: \t" << getcrmMedico() << endl;
     cout << "-------------------------"<<endl;

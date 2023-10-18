@@ -3,9 +3,9 @@
 int ListaPaciente:: contador_Paciente=1;
 using namespace std;
 
-ListaPaciente::ListaPaciente(string nome,char sexo, string endereco, string cpf, int telefone, int identidade, string relato, string Med_controlada){
-    head = new Paciente(nome, sexo, endereco, cpf, telefone, identidade, relato, Med_controlada); 
-	tail = head;  
+ListaPaciente::ListaPaciente(string nome,string endereco, string cpf,char sexo, int telefone, int identidade, string relato, string Med_controlada){
+    head = new Paciente(nome,endereco, cpf,sexo, telefone, identidade, relato, Med_controlada); 
+    tail = head;  
 }
 ListaPaciente::ListaPaciente(){
     head = NULL;
@@ -32,18 +32,18 @@ Paciente* ListaPaciente::getTail(){
 void ListaPaciente::setTail(Paciente* tail){
     this->tail=tail;
 }
-void ListaPaciente:: addPaciente(string nome,char sexo, string endereco, string cpf, int telefone, int identidade, string relato, string Med_controlada){
-   Paciente* p=new Paciente(nome, sexo, endereco, cpf, telefone, identidade, relato, Med_controlada);
-   if(vazia())
-   {
-       head=p;
-       tail=p;
-   }
-   else{
-       tail->setProx(p);
-       tail=head;
-   }
-   
+void ListaPaciente:: addPaciente(string nome,string endereco, string cpf,char sexo, int telefone, int identidade, string relato, string Med_controlada){
+    Paciente* p=new Paciente(nome,endereco, cpf, sexo, telefone, identidade, relato, Med_controlada);
+    if(vazia())
+{
+        head=p;
+        tail=p;
+}
+    else{
+        tail->setProx(p);
+        tail=head;
+}
+
 }
 void ListaPaciente::Remover_Paciente(string cpf){
 
@@ -85,27 +85,27 @@ void ListaPaciente::Remover_Paciente(string cpf){
 
 void ListaPaciente:: Imprimir_Paciente(){
     Paciente* p=head;
-     if(vazia())
-   {
-       head=p;
-       tail=p;
-       cout<<"\n Não tem pacientes cadastrados!! \n";
-   }
-   else{
+    if(vazia())
+    {
+        head=p;
+        tail=p;
+        cout<<"\n Não tem pacientes cadastrados!! \n";
+    }
+    else{
         while(p){
         cout<<"----------------Paciente "<<contador_Paciente++<<"----------------";
         cout<<endl;
         cout << "nome: \t\t" << p->getNome() << endl;
-        cout << "sexo: \t" << p->getSexo() << endl;
-        cout << "endereço: \t"<< p->getEndereco() << endl;
-        cout << "cpf: \t" << p->getCpf() << endl;
-        cout << "telefone \t" << p->getTel() << endl;
-        cout << "identidade: \t"<< p->getID() << endl;
-        cout << "relato: \t" << p->getRelato() << endl;
+        cout << "sexo: " << p->getSexo() << endl;
+        cout << "endereço: "<< p->getEndereco() << endl;
+        cout << "cpf: " << p->getCpf() << endl;
+        cout << "telefone " << p->getTel() << endl;
+        cout << "identidade: "<< p->getID() << endl;
+        cout << "relato: " << p->getRelato() << endl;
         cout << "Medicação Controlada consumida: " << p->getMedCon() << endl;
         cout<<endl;
         cout<<"---------------------------------------------------\n";
         p=p->getProx();
         }
-   }
+    }
 }

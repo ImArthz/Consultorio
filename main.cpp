@@ -8,13 +8,80 @@
 using namespace std;
 
 int main() {
-    
     Consultorio *consultorio=new Consultorio();
     Medico *medico= new Medico();
     Paciente* paciente=new Paciente();
     bool saida = true;
-    int opcao,CrmRemove,IdenRemove;
-    string CpfRemove;
+    int opcao,CrmRemove,IdenRemove,result,telCons;
+    string CpfRemove,link,command,nomeCons,op,enderecoCons;
+        cout<<" ======================BEM VINDO========================"<<endl;
+        cout<<"Vamos inicializar a criação do consultorio !"<<endl;
+        while(true){
+            cout<<"Digite o nome do consultorio :"<<endl;
+            getline(cin,nomeCons);
+            cout<<"Depois de Criado é impossivel mudar o nome do consultorio ! \ndeseja confirmar ? (S/N)"<<endl;
+            getline(cin, op);
+                if (op == "Sim" || op == "sim" || op == "S" || op == "s") {
+                    consultorio->setNome(nomeCons);
+                    break;
+                }
+                else if (op == "Não" || op == "nao" || op == "N" || op == "n") {
+                    cout << "Voltando ..." << endl;
+                }
+        
+                else 
+                {
+                    cout << "Opção inválida. Por favor, digite 'Sim' ou 'Não'." << endl;
+                }
+            }
+        while(true){
+            cout<<"->Digite o endereço do consultorio :"<<endl;
+            getline(cin,enderecoCons);
+            cout<<"->Depois de Criado é impossivel mudar o endereço do consultorio ! \ndeseja confirmar ? (S/N)"<<endl;
+            getline(cin, op);
+                if (op == "Sim" || op == "sim" || op == "S" || op == "s") {
+                    consultorio->setEndereco(enderecoCons);
+                    break;
+                }
+                else if (op == "Não" || op == "nao" || op == "N" || op == "n") {
+                    cout << "Voltando ..." << endl;
+                }
+        
+                else 
+                {
+                    cout << "Opção inválida. Por favor, digite 'Sim' ou 'Não'." << endl;
+                }
+            }
+        while(true){
+            while (true) {
+                cout << "->Telefone Do consultorio : ";
+                cin >> telCons;
+
+                if (cin.fail()) {
+                    cin.clear();  // Limpa o estado de erro
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descarta entrada inválida
+                    cout << "Entrada inválida. Digite um número inteiro." << endl;
+                } else {
+                    // Entrada válida, podemos sair do loop
+                    break;
+                }
+            }
+            cout<<"Depois de Criado é impossivel mudar o telefone do consultorio ! \n deseja confirmar ? (S/N)"<<endl;
+            cin.ignore();
+            getline(cin, op);
+                if (op == "Sim" || op == "sim" || op == "S" || op == "s") {
+                    consultorio->setTelefone(telCons);
+                    break;
+                }
+                else if (op == "Não" || op == "nao" || op == "N" || op == "n") {
+                    cout << "Voltando ..." << endl;
+                }
+        
+                else 
+                {
+                    cout << "Opção inválida. Por favor, digite 'Sim' ou 'Não'." << endl;
+                }
+            }
 
     while (saida) {
         cout << "----------------------MENU-------------------------"<<endl;
@@ -52,33 +119,35 @@ int main() {
                 cin.ignore();
                 if(consultorio->cadastrarMedico()){
                     cout<<"Medico cadastrado com sucesso"<<endl;
-                    break;
+                    
                 }
                 else{
                     cout<<"erro ao cadastrar medico "<<endl;
                 }
+                break;
             case 2:
                 cin.ignore();
                 if(consultorio->cadastraPaciente()){
                     cout<<"paciente cadastrado com sucesso"<<endl;
-                    break;
+                    
                 }
                 else{
                     cout<<"erro ao cadastrar paciente "<<endl;
-                    break;
+                    
                 }
-                
+                break;
 
             case 3:
                 cin.ignore();
                 if(consultorio->cadastrarConsulta()){
                     cout<<"consulta cadastrado com sucesso"<<endl;
-                    break;
+                    
                 }
                 else{
                     cout<<"erro ao cadastrar consulta "<<endl;
-                    break;
+                    
                 }
+                break;
 
             case 4:
                 consultorio->imprimirListaDeMedicos();
@@ -97,13 +166,13 @@ int main() {
                 break;
 
             case 8:
-                string link = "https://github.com/ImArthz/Consultorio";
+                link = "https://github.com/ImArthz/Consultorio";
 
                 // Construct the command to open the URL in the default web browser
-                string command = "xdg-open " + link;
+                command = "xdg-open " + link;
 
                 // Use the system function to execute the command
-                int result = system(command.c_str());
+                result = system(command.c_str());
 
                 // Check the result of the system call
                 if (result == 0) {
@@ -129,12 +198,14 @@ int main() {
                     }
                 }
                 consultorio->removerMedico(CrmRemove);
+                break;
 
             case 10:
                 cout<<"Digite o cpf do paciente que deseja remover: "<<endl;
                 cin.ignore();
                 getline(cin, CpfRemove);
                 consultorio->removerPaciente(CpfRemove);
+                break;
 
             case 11:
                 while (true) {
@@ -153,6 +224,12 @@ int main() {
                 consultorio->removerConsulta(IdenRemove);
                 break;
             case 12:
+                cout<<" Obrigado pela preferencia =)"<<endl;
+                cout<<"===================================================="<<endl;
+                cout<<"Nome do consultorio :"<<consultorio->getNome()<<endl;
+                cout<<"Endereço do consultorio : "<<consultorio->getEndereco()<<endl;
+                cout<<"Telefone do consultorio :"<<consultorio->getTelefone()<<endl;
+                cout<<"===================================================="<<endl;
                 cout<<"Saindo ..."<<endl;
                 saida = false;
                 break;

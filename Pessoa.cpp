@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Pessoa::Pessoa(string nome,string endereco,string cpf,char sexo, int telefone,int identidade):nome(nome),endereco(endereco),sexo(sexo),telefone(telefone),identidade(identidade){}
+Pessoa::Pessoa(string nome,string endereco,string cpf,char sexo, int telefone,int identidade):nome(nome),endereco(endereco),cpf(cpf),sexo(sexo),telefone(telefone),identidade(identidade){}
 
 Pessoa::Pessoa(){}
 

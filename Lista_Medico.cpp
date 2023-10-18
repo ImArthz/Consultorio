@@ -33,17 +33,17 @@ void ListaMedico::setTail(Medico* tail){
     this->tail=tail;
 }
 void ListaMedico:: addMedico(string nome,char sexo, string endereco, string cpf, int telefone, int identidade, int crm, string especializacao){
-   Medico* med=new Medico(nome,sexo,endereco,cpf,telefone,identidade,crm, especializacao); 
-   if(vazia())
-   {
-       head=med;
-       tail=med;
-   }
-   else{
-       tail->setProx(med);
-       tail=med;
-   }
-   
+    Medico* med=new Medico(nome,sexo,endereco,cpf,telefone,identidade,crm, especializacao); 
+    if(vazia())
+    {
+        head=med;
+        tail=med;
+    }
+    else{
+        tail->setProx(med);
+        tail=med;
+    }
+
 }
 void ListaMedico::Remover_Medico(int crm){
 
@@ -87,25 +87,25 @@ void ListaMedico:: Imprimir_Medico(){
     Medico* med=head;
     if(vazia())
     {
-       head=med;
-       tail=med;
-       cout<<"\n Não há medicos cadastrados!! \n";
+        head=med;
+        tail=med;
+        cout<<"\n Não há medicos cadastrados!! \n";
     }
     else{
         while(med){
         cout<<"-----------------medicos: "<<contador_Medico++<<"-------------------";
         cout<<endl;
-        cout << "nome: \t\t" << med->getNome() << endl;
-        cout << "sexo: \t" << med->getSexo() << endl;
-        cout << "endereço: \t"<< med->getEndereco() << endl;
-        cout << "cpf : \t" << med->getCpf() << endl;
-        cout << "telefone : \t" << med->getTel() << endl;
-        cout << "identidade: \t"<< med->getID() << endl;
-        cout << "CRM : \t" << med->getCrm() << endl;
-        cout << "especialização : \t" << med->getEsp() << endl;
+        cout << "nome: " << med->getNome() << endl;
+        cout << "sexo: " << med->getSexo() << endl;
+        cout << "endereço: "<< med->getEndereco() << endl;
+        cout << "cpf : " << med->getCpf() << endl;
+        cout << "telefone : " << med->getTel() << endl;
+        cout << "identidade: "<< med->getID() << endl;
+        cout << "CRM : " << med->getCrm() << endl;
+        cout << "especialização : " << med->getEsp() << endl;
         cout<<endl;
         cout<<"--------------------------------------------------------------\n";
         med=med->getProx();
         }
-   }
+    }
 }

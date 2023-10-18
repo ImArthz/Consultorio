@@ -21,7 +21,7 @@ class Paciente:public Pessoa
 
     Paciente();
 
-    Paciente(string nome,char sexo,string endereco,string cpf, int telefone,int identidade,string relato,string Med_controlada);
+    Paciente(string nome,string endereco,string cpf,char sexo,int telefone,int identidade,string relato,string Med_controlada);
     private:
         string relato;
         string Med_controlada;
