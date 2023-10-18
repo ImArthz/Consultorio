@@ -153,15 +153,44 @@ while (true) {
 Nesse trecho, o programa solicita ao usuário que insira um número inteiro. Se o usuário fornecer um valor inválido (por exemplo, um caractere não numérico), o bloco if (cin.fail()) identifica esse erro. Em seguida, a função cin.clear() é usada para limpar o estado de erro e permitir que o programa continue a execução. Além disso, cin.ignore() é usado para descartar a entrada inválida que causou o erro. Em seguida, uma mensagem de erro é exibida para orientar o usuário.
 
 Se o usuário inserir um número inteiro válido, o programa continuará sua execução normalmente. Esse tratamento de exceção é fundamental para evitar falhas inesperadas no programa devido a entradas incorretas. Além disso, é possível adicionar verificações adicionais, como garantir que o número esteja dentro de um intervalo específico, antes de prosseguir com o processamento dos dados.
+## Uso de Listas Manuais
 
-## Como Executar
+Neste projeto, utilizo classes personalizadas para gerenciar listas de pacientes, médicos e consultas manualmente. As classes `Lista_Paciente`, `Lista_Medico` e `Lista_Consulta` são responsáveis por criar e gerenciar essas listas de objetos. Estou utilizando ponteiros para estruturar a lista, o que me permite inserir e remover elementos dinamicamente.
+
+### Lista_Paciente.hpp e Lista_Medico.hpp
+
+Nas classes `Lista_Paciente` e `Lista_Medico`, faço uso dos atributos `head` e `tail` para acompanhar o início e o fim da lista. Esses atributos são ponteiros que apontam para o primeiro e o último elemento da lista, respectivamente:
+
+- `head`: Aponta para o primeiro elemento da lista. Quando adiciono um novo paciente ou médico, ele se torna o novo "cabeça" da lista.
+- `tail`: Aponta para o último elemento da lista. Quando adiciono um novo paciente ou médico, ele se torna o novo "rabo" da lista.
+
+Além disso, estou utilizando o atributo `prox` em minhas classes de paciente e médico para criar uma relação de lista encadeada entre os elementos. Isso me permite percorrer a lista, de `head` a `tail`, usando essas referências.
+
+### Lista_Consulta.hpp
+
+A classe `Lista_Consulta` segue uma estrutura semelhante, com atributos `head` e `tail` para rastrear o início e o fim da lista. Também uso atributos `prox` nas consultas para formar uma lista encadeada de consultas.
+
+### Adicionar à Lista
+
+Ao adicionar um novo elemento à lista, crio uma instância do objeto (por exemplo, um novo paciente, médico ou consulta) e, em seguida, atualizo os ponteiros `prox` para conectar o novo elemento ao último elemento da lista. Também atualizo o ponteiro `tail` para apontar para o novo elemento, indicando que ele agora é o último na lista.
+
+### Remover da Lista
+
+Para remover elementos da lista, encontro o elemento que desejo remover (por exemplo, com base no ID do paciente, CRM do médico ou identificador da consulta), ajusto os ponteiros `prox` para evitar o elemento que será removido e, em seguida, libero a memória alocada para o elemento.
+
+### Benefícios de Listas Manuais
+
+O uso de listas manuais me proporciona uma flexibilidade maior em comparação com contêineres de bibliotecas padrão, como `std::vector` ou `std::list`. Isso permite que eu gerencie os elementos de forma personalizada e implemente lógicas específicas para a aplicação.
+
+No entanto, é importante notar que também requer um maior entendimento e responsabilidade na gestão de memória e manipulação de ponteiros. É necessário lidar corretamente com a alocação e desalocação de memória para evitar vazamentos de memória ou acesso à memória não alocada. Além disso, é preciso garantir que as operações de inserção e remoção da lista sejam tratadas com cuidado para manter a integridade da lista e evitar falhas de segmentação.
+
 
 Para compilar o projeto, abra um terminal no diretório onde estão os arquivos-fonte (arquivos `.cpp` e `.hpp`) e o Makefile. Certifique-se de que o Makefile esteja na mesma pasta que os arquivos-fonte. Em seguida, execute o seguinte comando: 
 ```bash
 make
 ```
 
-O Makefile irá compilar todos os arquivos `.cpp` e criar o executável `Consultorio`. Os arquivos objeto compilados serão armazenados no diretório `./objects`.
+O Makefile irá compilar todos os arquivos `.cpp` e criar o executável `Consultorio`. Os arquivos objeto compilados serão armazenados no diretório `./Consultorio`.
 
 ## Executando o Projeto
 
