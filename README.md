@@ -133,11 +133,11 @@ result armazena o valor retornado pela função system. Se a chamada for bem-suc
 
 O bloco if (result == 0) verifica se a chamada do sistema foi bem-sucedida e exibe uma mensagem correspondente. Se a abertura do navegador for bem-sucedida, a mensagem "Navegador da web aberto com sucesso" é exibida. Caso contrário, a mensagem "Falha ao abrir o navegador da web" é exibida.
 
-Esse trecho é útil para permitir que os usuários acessem facilmente o repositório do seu código no GitHub, facilitando a visualização, colaboração e download do projeto.
+Esse trecho é útil para permitir que os usuários acessem facilmente o repositório do  código no GitHub, facilitando a visualização, colaboração e download do projeto.
 
 ### Tratamento de excessão
 
-Em várias partes do código, estamos fazendo uso da biblioteca #include <limits> para realizar o tratamento de exceções. Esse tratamento é útil para lidar com entradas de dados do usuário e garantir que essas entradas sejam válidas, especialmente quando se espera um número inteiro. O trecho de código abaixo ilustra como isso é feito:
+Em várias partes do código, estamos fazendo uso da biblioteca `#include <limits>` para realizar o tratamento de exceções. Esse tratamento é útil para lidar com entradas de dados do usuário e garantir que essas entradas sejam válidas, especialmente quando se espera um número inteiro. O trecho de código abaixo ilustra como isso é feito:
 ```bash
 while (true) {
     cout << "->Digite um número inteiro: " << endl;
@@ -156,7 +156,7 @@ while (true) {
 ```
 Nesse trecho, o programa solicita ao usuário que insira um número inteiro. Se o usuário fornecer um valor inválido (por exemplo, um caractere não numérico), o bloco if (cin.fail()) identifica esse erro. Em seguida, a função cin.clear() é usada para limpar o estado de erro e permitir que o programa continue a execução. Além disso, cin.ignore() é usado para descartar a entrada inválida que causou o erro. Em seguida, uma mensagem de erro é exibida para orientar o usuário.
 
-Se o usuário inserir um número inteiro válido, o programa continuará sua execução normalmente. Esse tratamento de exceção é fundamental para evitar falhas inesperadas no programa devido a entradas incorretas. Além disso, é possível adicionar verificações adicionais, como garantir que o número esteja dentro de um intervalo específico, antes de prosseguir com o processamento dos dados.
+Se o usuário inserir um número inteiro válido, o programa continuará sua execução normalmente. Esse tratamento de exceção é fundamental para evitar falhas inesperadas  devido a entradas incorretas. Além disso, é possível adicionar verificações adicionais, como garantir que o número esteja dentro de um intervalo específico, antes de prosseguir com o processamento dos dados.
 ## Lista Encadeada em C++
 
 Uma lista encadeada é uma estrutura de dados que pode ser visualizada como uma corrente de elos de bicicleta, onde cada elo (ou nó) contém um valor de informação e uma referência para o próximo elo da corrente. Em C++, podemos criar uma lista encadeada manualmente para organizar e armazenar dados.
