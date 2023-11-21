@@ -6,6 +6,7 @@
 #include <string>
 #include <limits> // Biblioteca para lidar com erros de leitura de inteiro
 #include <random>// Biblioteca para gerar numeros aleatorios
+#include "excessaoMedicoInexistente.hpp"
 using namespace std;
 
 Consultorio::Consultorio(ListaMedico* medicos, ListaPaciente* pacientes, ListaConsulta* consultas, string nome, string endereco, int telefone){
@@ -125,39 +126,33 @@ bool Consultorio::cadastrarMedico() {
     return true;
 }
 
-bool Consultorio::removerMedico(int crm)
-    {
-        while(true){
-            string op;
-            bool encontrado = false;
-            cout << "Tem certeza disso ?  (S/N)?" << endl;
-            cout <<" Ao digitar sim o Medico de crm"<<crm<< " sera permanentemente excluido"<<endl;
-            cin.ignore();
-            getline(cin, op);
-            if (op == "Sim" || op == "sim" || op == "S" || op == "s") {
-                
+bool Consultorio::removerMedico(int crm) {
+    while (true) {
+        string op;
+        bool encontrado = false;
+        cout << "Tem certeza disso? (S/N)?" << endl;
+        cout << "Ao digitar sim, o médico de CRM " << crm << " será permanentemente excluído" << endl;
+        cin.ignore();
+        getline(cin, op);
+        if (op == "Sim" || op == "sim" || op == "S" || op == "s") {
+            try {
                 medicos->Remover_Medico(crm);
-                encontrado=true;
+                encontrado = true;
                 return true;
-                throw std::runtime_error("Erro ao remover médico"); 
-                return false; 
-            
-                if (!encontrado) {
-                    cout << "O Medico de crm: " << crm << " não foi encontrado" << endl;
-                }
+            } catch (...) {
+                throw medicoInexistente();
             }
-            else if (op == "Não" || op == "nao" || op == "N" || op == "n") {
-                cout << "Voltando ao menu" << endl;
-                return false ; // Sai da função se o usuário decide não excluir o Medico;
+            if (!encontrado) {
+                cout << "O médico de CRM " << crm << " não foi encontrado" << endl;
             }
-    
-            else 
-            {
-                cout << "Opção inválida. Por favor, digite 'Sim' ou 'Não'." << endl;
-            }
+        } else if (op == "Não" || op == "nao" || op == "N" || op == "n") {
+            cout << "Voltando ao menu" << endl;
+            return false; // Sai da função se o usuário decide não excluir o médico;
+        } else {
+            cout << "Opção inválida. Por favor, digite 'Sim' ou 'Não'." << endl;
         }
-        
-    }  
+    }
+}
 bool Consultorio::cadastraPaciente()
 {
     int FonePaci,IdPaci;

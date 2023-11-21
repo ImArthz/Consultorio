@@ -7,6 +7,7 @@
 #include <string>
 #include "Lista_Medico.hpp"
 #include "Lista_Paciente.hpp"
+#include "excessaoMedicoInexistente.hpp"
 #include "Lista_Consulta.hpp"
 using namespace std;
 
