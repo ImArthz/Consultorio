@@ -1,5 +1,6 @@
 #include<iostream> 
 #include "Lista_Medico.hpp"
+#include "excessaoMedicoInexistente.hpp"
 int ListaMedico:: contador_Medico=1;
 using namespace std;
 
@@ -9,17 +10,23 @@ ListaMedico::ListaMedico(string nome,char sexo, string endereco, string cpf, int
 }
 ListaMedico::ListaMedico(){
     head = NULL;
-	tail = NULL;
+    tail = NULL;
+}
+ListaMedico::~ListaMedico() // destrutor
+{
+Medico* atual = head;
+while (atual != NULL)
+{
+Medico* temp = atual;
+atual = atual->getProx();
+delete temp;
+}
 }
 
 bool ListaMedico::vazia() 
 {
     return (head==NULL);
 }
-ListaMedico::~ListaMedico(){
-    delete head;
-}
-
 Medico* ListaMedico::getHead(){
     return head;
 }
@@ -46,11 +53,21 @@ void ListaMedico:: addMedico(string nome,char sexo, string endereco, string cpf,
 
 }
 void ListaMedico::Remover_Medico(int crm){
+    bool encontrada = false;
 
     if(vazia())
+    {
 	cout << "Não há nenhum medico cadastrado \n";
+        return ;
+    }
 	else if(head->getProx()==NULL && head->getCrm()==crm)
-		head=NULL;
+	{
+		delete head; // Libera memória
+                head = NULL;
+                tail = NULL; // A cauda também deve ser atualizada
+        }
+	else if(head->getProx()==NULL && head->getCrm()!=crm)
+	        throw medicoInexistente();
 	else if(head->getProx()->getProx()==NULL && head->getCrm()==crm){
 		head=head->getProx();
 	}
@@ -60,8 +77,9 @@ void ListaMedico::Remover_Medico(int crm){
 	}
 	else{
 		Medico* previous=head;
-		Medico* i=head->getProx();
-		Medico* next=head->getProx()->getProx();
+		Medico* i=head;
+		Medico* next=head->getProx();
+		
 		while(next){
 			if(head->getCrm()==crm){
 				head=head->getProx();
@@ -76,12 +94,18 @@ void ListaMedico::Remover_Medico(int crm){
 		}
 		if(i->getCrm()==crm)
         {
-			previous->setProx(NULL);			
-			tail=previous;
-            free(i);
+                      encontrada = true;
+		      previous->setProx(NULL);			
+		      tail=previous;
+                      free(i);
+	    }
+	    if (!encontrada)
+	    {
+	      throw medicoInexistente();
 	    }
     }
 }
+
 
 void ListaMedico:: Imprimir_Medico(){
     Medico* med=head;

@@ -7,6 +7,7 @@
 #include <limits> // Biblioteca para lidar com erros de leitura de inteiro
 #include <random>// Biblioteca para gerar numeros aleatorios
 #include "excessaoMedicoInexistente.hpp"
+#include "excessaoPacienteInexistente.hpp"
 using namespace std;
 
 Consultorio::Consultorio(ListaMedico* medicos, ListaPaciente* pacientes, ListaConsulta* consultas, string nome, string endereco, int telefone){
@@ -139,8 +140,10 @@ bool Consultorio::removerMedico(int crm) {
                 medicos->Remover_Medico(crm);
                 encontrado = true;
                 return true;
-            } catch (...) {
-                throw medicoInexistente();
+            } catch (medicoInexistente &ex) {
+                cout << "Ocorreu um erro "<< ex.what()<<endl; 
+                fflush(stdout);
+                return false ;
             }
             if (!encontrado) {
                 cout << "O médico de CRM " << crm << " não foi encontrado" << endl;
@@ -238,9 +241,15 @@ bool Consultorio::removerPaciente(string cpf)
             //cin.ignore(); não é nescessario pois é tratado se nao for s/n
             getline(cin, op);
             if (op == "Sim" || op == "sim" || op == "S" || op == "s") {
+                try{
                 pacientes->Remover_Paciente(cpf);
                 encontrado = true;    
                 return true; // Paciente removido com sucesso
+                }
+                catch(pacienteInexistente &ex)
+                {
+                  cout<<"Erro : "<< ex.what()<<endl; 
+                }
             
                 if (!encontrado) {
                     cout << "O Paciente de Cpf: " << cpf << " não foi encontrado" << endl;

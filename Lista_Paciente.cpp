@@ -1,5 +1,6 @@
 #include<iostream> 
 #include "Lista_Paciente.hpp"
+#include "excessaoPacienteInexistente.hpp"
 int ListaPaciente:: contador_Paciente=1;
 using namespace std;
 
@@ -17,7 +18,13 @@ bool ListaPaciente::vazia()
     return (head==NULL);
 }
 ListaPaciente::~ListaPaciente(){
-    delete head;
+  Paciente* atual = head;
+  while (atual != NULL)
+  {
+  Paciente* temp = atual;
+  atual = atual->getProx();
+  delete temp;
+  }
 }
 
 Paciente* ListaPaciente::getHead(){
@@ -46,11 +53,20 @@ void ListaPaciente:: addPaciente(string nome,string endereco, string cpf,char se
 
 }
 void ListaPaciente::Remover_Paciente(string cpf){
+    bool encontrado = false;
 
     if(vazia())
 	cout << "Não há nenhum paciente cadastrado\n";
 	else if(head->getProx()==NULL && head->getCpf()==cpf)
-		head=NULL;
+	{
+		delete head; // Libera memória
+                head = NULL;
+                tail = NULL; // A cauda também deve ser atualizada
+        }
+        else if(head->getProx()==NULL && head->getCpf()!=cpf)
+        {
+          throw pacienteInexistente();
+        }
 	else if(head->getProx()->getProx()==NULL && head->getCpf()==cpf){
 		head=head->getProx();
 	}
@@ -75,10 +91,15 @@ void ListaPaciente::Remover_Paciente(string cpf){
 			next=next->getProx();
 		}
 		if(i->getCpf()==cpf)
-        {
+        {               
+                        encontrado = true;
 			previous->setProx(NULL);
 			free(i);
 			tail=previous;
+	    }
+	    if(!encontrado)
+	    {
+	      throw pacienteInexistente();
 	    }
     }
 }
