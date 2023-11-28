@@ -1,6 +1,7 @@
 #include<iostream> 
 #include "Lista_Consulta.hpp"
 #include <string>
+#include "excessaoConsultaInexistente.hpp"
 using namespace std;
 
 ListaConsulta::ListaConsulta(string data,string hora, string cpfPaciente, int crmMedico,int identificador){
@@ -17,7 +18,13 @@ bool ListaConsulta::vazia()
     return (head==NULL);
 }
 ListaConsulta::~ListaConsulta(){
-    delete head;
+    Consulta* atual = head;
+    while (atual != NULL)
+    {
+    Consulta* temp = atual;
+    atual = atual->getProx();
+    delete temp;
+    }
 }
 
 Consulta* ListaConsulta::getHead(){
@@ -49,11 +56,18 @@ void ListaConsulta:: add_Consulta(string data, string hora, string cpfPaciente, 
 }
 void ListaConsulta::Remover_Consulta(int identificador){
 
-
+    bool encontrado = false;
     if(vazia())
 	cout << "Não há nenhum paciente agendado para consulta\n";
 	else if(head->getProx()==NULL && head->getIdentificador() == identificador)
-		head=NULL;
+    {
+                delete head; // Libera memória
+                head = NULL;
+                tail = NULL; // A cauda também deve ser atualizada
+    }
+    else if(head->getProx()==NULL && head->getIdentificador()!= identificador){
+        throw ConsultaInexistente();
+    }
 	else if(head->getProx()->getProx()==NULL && head->getIdentificador()==identificador){
 		head=head->getProx();
 	}
@@ -70,6 +84,7 @@ void ListaConsulta::Remover_Consulta(int identificador){
 				head=head->getProx();
 			}
 			else if(i->getIdentificador()==identificador){
+                encontrado = true;
 				previous->setProx(next);
 				free(i);
 			}
@@ -83,6 +98,10 @@ void ListaConsulta::Remover_Consulta(int identificador){
 			free(i);
 			tail=previous;
 	    }
+        if(!encontrado)
+        {
+            cout<<"Consulta não encontrada "<<endl;
+        }
     }
 }
 void ListaConsulta:: Imprimir_Consulta(){

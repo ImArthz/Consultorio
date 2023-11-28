@@ -2,15 +2,15 @@
 #define __LISTA_PACIENTE_HPP
 #include "Paciente.hpp"
 using namespace std;
-class ListaPaciente{
+class ListaPaciente
+{
 
 public:
-    ListaPaciente(string nome,string endereco, string cpf,char sexo, int telefone, int identidade, string relato, string Med_controlada);
+    ListaPaciente(string nome, string endereco, string cpf, char sexo, int telefone, int identidade, string relato, string Med_controlada);
 
     ListaPaciente();
 
-
-    void addPaciente(string nome ,string endereco, string cpf,char sexo, int telefone, int identidade, string relato, string Med_controlada);
+    void addPaciente(string nome, string endereco, string cpf, char sexo, int telefone, int identidade, string relato, string Med_controlada);
 
     void Imprimir_Paciente();
 
@@ -19,17 +19,18 @@ public:
     virtual ~ListaPaciente();
 
     bool vazia();
-    
-    Paciente* getHead();
 
-    void setHead(Paciente* head);
+    Paciente *getHead();
 
-    Paciente* getTail();
+    void setHead(Paciente *head);
 
-    void setTail(Paciente* tail);
+    Paciente *getTail();
+
+    void setTail(Paciente *tail);
+
 private:
-    Paciente* head;
-    Paciente* tail;
+    Paciente *head;
+    Paciente *tail;
     static int contador_Paciente;
 };
 #endif

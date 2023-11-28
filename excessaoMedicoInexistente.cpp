@@ -1,5 +1,4 @@
 #include "excessaoMedicoInexistente.hpp"
-medicoInexistente::medicoInexistente():runtime_error
-	( "Medico Inexistente") 
-{}
-
+medicoInexistente::medicoInexistente() : runtime_error("Medico Inexistente")
+{
+}

@@ -4,43 +4,45 @@
 #include <string>
 
 using namespace std;
-class Pessoa {
+class Pessoa
+{
 
-    public:
-        void setNome(string nome);
-    
-        string getNome();
-    
-        void setEndereco(string endereco);
-    
-        string getEndereco();
+public:
+    void setNome(string nome);
 
-        void setCpf(string cpf);
-    
-        string getCpf();
+    string getNome();
 
-        void setSexo(char sexo);
-    
-        char getSexo();
+    void setEndereco(string endereco);
 
-        void setTel(int telefone);
-    
-        int getTel();
+    string getEndereco();
 
-        void setID(int identidade);
-    
-        int getID();
+    void setCpf(string cpf);
 
-        Pessoa(string nome,string endereco,string cpf,char sexo, int telefone,int identidade);
-        Pessoa();
+    string getCpf();
 
-        void imprimir();
-    private:
-        string nome;
-        string endereco;
-        string cpf;
-        char sexo;
-        int telefone;
-        int identidade;   
+    void setSexo(char sexo);
+
+    char getSexo();
+
+    void setTel(int telefone);
+
+    int getTel();
+
+    void setID(int identidade);
+
+    int getID();
+
+    Pessoa(string nome, string endereco, string cpf, char sexo, int telefone, int identidade);
+    Pessoa();
+
+    void imprimir();
+
+private:
+    string nome;
+    string endereco;
+    string cpf;
+    char sexo;
+    int telefone;
+    int identidade;
 };
 #endif

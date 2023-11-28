@@ -4,8 +4,9 @@
 #include <iostream>
 #include <string>
 using namespace std;
-class Medico: public Pessoa {
-    public:
+class Medico : public Pessoa
+{
+public:
     void setCrm(int crm);
 
     int getCrm();
@@ -14,21 +15,17 @@ class Medico: public Pessoa {
 
     string getEsp();
 
-    void setProx(Medico* prox);
+    void setProx(Medico *prox);
 
-    Medico* getProx();
+    Medico *getProx();
 
     Medico();
-    
-    Medico(string nome,char sexo,string endereco,string cpf, int telefone,int identidade,int crm,string especializacao);
 
-    
-    private:
+    Medico(string nome, char sexo, string endereco, string cpf, int telefone, int identidade, int crm, string especializacao);
+
+private:
     int crm;
     string especializacao;
-    Medico* prox;
-
-    
-        
+    Medico *prox;
 };
 #endif

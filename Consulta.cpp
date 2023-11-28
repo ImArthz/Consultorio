@@ -3,67 +3,72 @@
 #include <string>
 using namespace std;
 
-Consulta::Consulta(string data, string hora, string cpfPaciente, int crmMedico,int identificador):data(data),hora(hora),cpfPaciente(cpfPaciente),crmMedico(crmMedico),identificador(identificador)
+Consulta::Consulta(string data, string hora, string cpfPaciente, int crmMedico, int identificador) : data(data), hora(hora), cpfPaciente(cpfPaciente), crmMedico(crmMedico), identificador(identificador)
 {
-  this-> prox = NULL;
+  this->prox = NULL;
 }
-Consulta:: Consulta()
+Consulta::Consulta()
 {
-  this -> prox = NULL;
-
+  this->prox = NULL;
 }
-void Consulta :: setData(string data){
-  this -> data = data;
+void Consulta ::setData(string data)
+{
+  this->data = data;
 }
-string Consulta :: getData(){
+string Consulta ::getData()
+{
   return data;
 }
-void Consulta :: setHora(string hora){
-  this-> hora = hora ;
+void Consulta ::setHora(string hora)
+{
+  this->hora = hora;
 }
-string Consulta :: getHora(){
+string Consulta ::getHora()
+{
   return hora;
 }
-void Consulta :: setIdentificador(int identificador){
-    this->identificador=identificador;
-}
-int Consulta :: getIdentificador(){
-    return identificador;
-}
-void Consulta :: setcpfPaciente(string cpfPaciente)
+void Consulta ::setIdentificador(int identificador)
 {
-    this->cpfPaciente=cpfPaciente;
+  this->identificador = identificador;
+}
+int Consulta ::getIdentificador()
+{
+  return identificador;
+}
+void Consulta ::setcpfPaciente(string cpfPaciente)
+{
+  this->cpfPaciente = cpfPaciente;
 }
 
-string Consulta :: getcpfPaciente()
+string Consulta ::getcpfPaciente()
 {
-    return cpfPaciente;
+  return cpfPaciente;
 }
-void Consulta :: setcrmMedico(int crmMedico)
+void Consulta ::setcrmMedico(int crmMedico)
 {
-    this->crmMedico=crmMedico;
+  this->crmMedico = crmMedico;
 }
 
-int Consulta :: getcrmMedico()
+int Consulta ::getcrmMedico()
 {
-    return crmMedico;
+  return crmMedico;
 }
-void Consulta :: imprimir_consulta()
+void Consulta ::imprimir_consulta()
 {
-    cout << "\t\tConsulta"<<endl;
-    cout << "-------------------------"<<endl;
-    cout << "Identificador: \t"<<getIdentificador()<<endl;
-    cout << "Data: \t" << getData()<< endl;
-    cout << "Hora: \t" << getHora() << endl;
-    cout << "Cpf do Paciente: \t" << getcpfPaciente() << endl;
-    cout << "Crm do Médico: \t" << getcrmMedico() << endl;
-    cout << "-------------------------"<<endl;
-
+  cout << "\t\tConsulta" << endl;
+  cout << "-------------------------" << endl;
+  cout << "Identificador: \t" << getIdentificador() << endl;
+  cout << "Data: \t" << getData() << endl;
+  cout << "Hora: \t" << getHora() << endl;
+  cout << "Cpf do Paciente: \t" << getcpfPaciente() << endl;
+  cout << "Crm do Médico: \t" << getcrmMedico() << endl;
+  cout << "-------------------------" << endl;
 }
-void Consulta::setProx(Consulta* prox){
-    this->prox=prox;
+void Consulta::setProx(Consulta *prox)
+{
+  this->prox = prox;
 }
-Consulta* Consulta::getProx(){
-    return prox;
+Consulta *Consulta::getProx()
+{
+  return prox;
 }
-

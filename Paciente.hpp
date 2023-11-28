@@ -4,9 +4,9 @@
 #include <iostream>
 #include <string>
 
-class Paciente:public Pessoa
+class Paciente : public Pessoa
 {
-    public:
+public:
     void setRelato(string relato);
 
     string getRelato();
@@ -15,16 +15,17 @@ class Paciente:public Pessoa
 
     string getMedCon();
 
-    void setProx(Paciente* prox);
+    void setProx(Paciente *prox);
 
-    Paciente* getProx();
+    Paciente *getProx();
 
     Paciente();
 
-    Paciente(string nome,string endereco,string cpf,char sexo,int telefone,int identidade,string relato,string Med_controlada);
-    private:
-        string relato;
-        string Med_controlada;
-        Paciente* prox;
+    Paciente(string nome, string endereco, string cpf, char sexo, int telefone, int identidade, string relato, string Med_controlada);
+
+private:
+    string relato;
+    string Med_controlada;
+    Paciente *prox;
 };
 #endif
